@@ -27,7 +27,7 @@ res.send({'message': 'Attendance marked successfully!'});
 app.post('/mark', function(req, res) {
 var netid = req.body.netid;
 var sql = `INSERT INTO attendance (netid, present) VALUES
-('jup2',1)`;
+('${netid}',1)`;
 console.log(sql);
 connection.query(sql, function(err, result) {
 if (err) {
