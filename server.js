@@ -3,10 +3,10 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql2');
 var path = require('path');
 var connection = mysql.createConnection({
-host: '34.172.127.66',
-user: 'root',
-password: 'Sss020501!',
-database: 'db'
+    host: '34.172.127.66',
+    user: 'root',
+    password: 'Sss020501!',
+    database: 'db'
 });
 
 connection.connect;
@@ -17,27 +17,29 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '../public'));
+
 /* GET home page, respond by rendering index.ejs */
 app.get('/', function(req, res) {
-res.render('index', { title: 'Mark Attendance' });
+    res.render('index', { title: 'Mark Attendance' });
 });
 app.get('/success', function(req, res) {
-res.send({'message': 'Attendance marked successfully!'});
+    res.send({'message': 'Attendance marked successfully!'});
 });
+
 // this code is executed when a user clicks the form submit button
 app.post('/mark', function(req, res) {
-var netid = req.body.netid;
-var sql = `INSERT INTO attendance (netid, present) VALUES
-('${netid}',1)`;
-console.log(sql);
-connection.query(sql, function(err, result) {
-if (err) {
-res.send(err)
-return;
-}
-res.redirect('/success');
-});
+    var netid = req.body.netid;
+    var sql = `INSERT INTO attendance (netid, present) VALUES
+    ('${netid}',1)`;
+    console.log(sql);
+    connection.query(sql, function(err, result) {
+        if (err) {
+            res.send(err)
+        return;
+        }
+        res.redirect('/success');
+    });
 });
 app.listen(80, function () {
-console.log('Node app is running on port 80');
+    console.log('Node app is running on port 80');
 });
