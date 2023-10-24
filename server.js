@@ -8,6 +8,7 @@ user: 'root',
 password: 'Sss020501!',
 database: 'db'
 });
+
 connection.connect;
 var app = express();
 // set up ejs view engine
