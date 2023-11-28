@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare_countries_bar_graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .graph-title {
+            text-align: center;
+            margin: 20px;
+            font-size: 24px;
+        }
+
+        .graph-container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .bar-label {
+            min-width: 100px; /* Adjust as needed */
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .bar-inner {
+            display: flex;
+            width: 100%; /* Full width of its container */
+        }
+
+        .bar-segment {
+            height: 20px;
+            display: inline-block;
+        }
+
+        .first-color {
+            background-color: #FFD700; /* Yellow color */
+            width: 50%; /* Adjust the width as needed */
+        }
+
+        .second-color {
+            background-color: #0000FF; /* Blue color */
+            width: 50%; /* Adjust the width as needed */
+        }
+
+        /* You can add more color styles as needed */
+    </style>
+</head>
+<body>
+    <div class="graph-title">Comparing two countries: Country 1 vs Country 2</div>
+    <div class="graph-container">
+        <% if (cmp_arr.length !== 0) { %>
+            <% cmp_arr.forEach(function(data, index) { %>
+                <div class="bar">
+                    <% if (index == 0) { %>
+                        <div class="bar-label">Total Views</div>
+                    <% } %>
+                    <% if (index == 1) { %>
+                      <div class="bar-label">Total Likes</div>
+                    <% } %>
+                    <% if (index == 2) { %>
+                      <div class="bar-label">Total dislikes</div>
+                    <% } %>
+                    <% if (index == 3) { %>
+                      <div class="bar-label">Total Comments</div>
+                    <% } %>
+                    <div class="bar-inner">
+                        <div class="bar-segment first-color" style="width: <%= data.value1 %>%;"></div>
+                        <div class="bar-segment second-color" style="width: <%= data.value2 %>%;"></div>
+                    </div>
+                </div>
+            <% }); %>
+          <% } %>
+    </div>
+  </body>
+</html>
