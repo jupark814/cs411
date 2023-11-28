@@ -26,51 +26,82 @@
         button:hover {
             background-color: #ddd;
         }
+        input[type="checkbox"],
+        input[type="date"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            padding: 10px;
+            background-color: #5f9ea0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #4f8f8b;
+        }
     </style>
 </head>
 <body>
 
     <h1>Choose a Country</h1>
-    <div class="container">
-        <h2>Select Dates and Option</h2>
-        <div class="checkbox-container">
-            <input type="checkbox" id="option1" class="checkbox-custom" name="option">
-            <label for="option1">United States</label>
-            <input type="checkbox" id="option2" class="checkbox-custom" name="option">
-            <label for="option2">Great Bri</label>
-            <input type="checkbox" id="option3" class="checkbox-custom" name="option">
-            <label for="option3">Canada</label>
-            <input type="checkbox" id="option4" class="checkbox-custom" name="option">
-            <label for="option4">South Korea</label>
-        </div>
-        <div class="date-inputs">
-            <input type="date" id="startDate">
-            <input type="date" id="endDate">
-        </div>
-        <button onclick="submitDates()">Submit</button>
+    <h2>Select Dates and Option</h2>
+    <div class="solo_country">
+        <form action="/solo_country" method="post">
+            <select id="dropdown1" name="dropdown1">
+                <option value="US_Videos" id="US_Videos">United States</option>
+                <option value="UK_Videos" id="UK_Videos">United Kingdom</option>
+                <option value="KR_Videos" id="KR_Videos">Korea</option>
+                <option value="CA_Videos" id="CA_Videos">Canada</option>
+            </select>
+            <input type="date" id="startDate" name="startDate">
+            <input type="date" id="endDate" name="endDate"><br>
+
+            <select id="dropdown2" name="dropdown2">
+            <option value="most_views" id="most_views">Most Views</option>
+            <option value="most_commented" id="most_commented">Most Commented</option>
+            <option value="most_liked" id="most_liked">Most Liked</option>
+            <option value="most_disliked" id="most_disliked">Most Disliked</option>
+            <option value="category_bar_graph" id="category_bar_graph">Category Bar Graph</option>
+            <option value="channel_likes" id="channel_likes">Channel based Likes</option>
+            <option value="channel_dislikes" id="channel_dislikes">Channel based Dislikes</option>
+
+            </select>
+            <input type="submit" value="Submit">
+        </form>
     </div>
-    
+
     <h1>Compare Two Countries</h1>
-    <select id="dropdown1" name="dropdown1">
-    <option value="option1">United States</option>
-    <option value="option2">Great Britain</option>
-    <option value="option3">Canada</option>
-    <option value="option3">South Korea</option>
 
-    <!-- Add more options here -->
-    </select>
+    <div class="multi_countries">
+        <form action="/multi_countries" method="post">
+            <select id="dropdown3" name="dropdown3">
+            <option value="US">United States</option>
+            <option value="UK">Great Britain</option>
+            <option value="CA">Canada</option>
+            <option value="KR">South Korea</option>
+            </select>
 
-    <select id="dropdown2" name="dropdown2">
-    <option value="option1">United States</option>
-    <option value="option2">Great Britain</option>
-    <option value="option3">Canada</option>
-    <option value="option3">South Korea</option>
-
-    <div class="submit-button">
-        <input type="submit" value="Submit">
+            <select id="dropdown4" name="dropdown4">
+            <option value="US">United States</option>
+            <option value="UK">Great Britain</option>
+            <option value="CA">Canada</option>
+            <option value="KR">South Korea</option>
+            </select>
+            <input type="submit" value="Submit">
+        </form>
     </div>
-    <!-- Add more options here -->
-    </select>
 
+    <h1>Your Favorite Videos</h1>
+
+    <div class="modified_favorite_videos">
+        <form action="/modified_favorite_videos" method="post">
+            <input type="submit" value="Go">
+        </form>
+    </div>
 </body>
 </html>

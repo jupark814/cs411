@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Graph with Side Labels</title>
+    <style>
+        .bar-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .bar-label {
+            width: 100px; /* Fixed width for labels */
+            text-align: right;
+            margin-right: 10px; /* Space between label and bar */
+        }
+
+        .bar-container {
+            flex-grow: 1;
+            background-color: #f1f1f1;
+        }
+
+        .bar {
+            width: 0%;
+            height: 30px;
+            background-color: #4CAF50;
+            text-align: right;
+            line-height: 30px; /* Center text vertically */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Category Bar Graph</h2>
+    <% if (myarr.length !== 0) { %>
+        <% myarr.forEach(function(data, index) { %>
+            <div class="bar-row">
+                <div class="bar-label"><%= data.cat_title %></div>
+                <div class="bar-container">
+                    <div class="bar" style="width: <%= data.cat_count %>%;" id="btn"><%= data.cat_count %></div>
+                </div>
+            </div>
+        <% }); %>
+      <% } %>
+
+
+</body>
+</html>
