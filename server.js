@@ -10,6 +10,7 @@ var connection = mysql.createConnection({
     database: 'classicmodels'
 });
 
+
 connection.connect;
 var app = express();
 // set up ejs view engine
@@ -93,7 +94,7 @@ app.post('/solo_country', function(req, res) {
     
 
     if(table_choice == "most_views") {
-        sql = `SELECT channel_title, title, view_count
+        sql = `SELECT v.v_id,channel_title, title, view_count
         FROM ${country} v JOIN Channel ch ON v.channel_id = ch.channel_id JOIN HasTrendingDate h ON v.v_id = h.v_id 
         WHERE dates LIKE '${startDate}' OR dates LIKE '${endDate}'
         ORDER BY view_count 
@@ -234,6 +235,7 @@ app.post('/solo_country', function(req, res) {
                 for (var i = 0; i < lng; i++) {
                     //Create an object to save current row's data
                     var video = {
+			'v_id': rows[i].v_id,
                         'channel_title':rows[i].channel_title,
                         'title':rows[i].title,
                         'view_count': rows[i].view_count,
