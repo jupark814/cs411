@@ -91,6 +91,7 @@ app.post('/solo_country', function(req, res) {
     var startDate = req.body.startDate + '%';
     var endDate = req.body.endDate + '%';
     var table_choice = req.body.dropdown2;
+    var text = '%' + req.body.search_keyword + '%';
     
 
     if(table_choice == "most_views") {
@@ -123,7 +124,7 @@ app.post('/solo_country', function(req, res) {
     }
     else if(table_choice == "category_bar_graph") {
         sql = `SELECT cat_title, COUNT(v_id) AS category_count , SUM(view_count) AS numViews, SUM(likes) AS numLikes 
-        FROM Videos v JOIN Category c ON v.cat_id=c.cat_id
+        FROM ${country} v JOIN Category c ON v.cat_id=c.cat_id
         GROUP BY cat_title
         ORDER BY category_count DESC, numViews DESC, numLikes DESC`;
     }
@@ -131,7 +132,7 @@ app.post('/solo_country', function(req, res) {
         sql = `SELECT like_count.channel_title, Like_vid_num, like_count.avg_view
         FROM (
         SELECT c.channel_title, v.channel_id, COUNT(likes) AS Like_vid_num, AVG(view_count) AS avg_view
-        FROM Videos v JOIN Channel c ON (v.channel_id = c.channel_id) 
+        FROM ${country} v JOIN Channel c ON (v.channel_id = c.channel_id) 
         WHERE likes > 5000
         GROUP BY c.channel_id
         ) AS like_count
@@ -143,12 +144,20 @@ app.post('/solo_country', function(req, res) {
         sql = `SELECT dislike_count.channel_title, Dislike_vid_num, dislike_count.avg_view
         FROM (
         SELECT c.channel_title, v.channel_id, COUNT(dislikes) AS Dislike_vid_num, AVG(view_count) AS avg_view
-        FROM Videos v JOIN Channel c ON (v.channel_id = c.channel_id) 
+        FROM ${country} v JOIN Channel c ON (v.channel_id = c.channel_id) 
         WHERE dislikes > 5000
         GROUP BY c.channel_id
         ) AS dislike_count
         WHERE Dislike_vid_num > 8 
         ORDER BY Dislike_vid_num DESC
+        `;
+    }
+    else if(table_choice == "search_videos") {
+        sql = `SELECT DISTINCT channel_title, v.title, v.view_count
+        FROM ${country} v JOIN Channel ch ON v.channel_id = ch.channel_id JOIN HasTrendingDate h ON v.v_id = h.v_id
+        WHERE (dates LIKE '${startDate}' OR dates LIKE '${endDate}') AND v.title LIKE '${text}'
+        ORDER BY view_count 
+        DESC LIMIT 100
         `;
     }
 
@@ -279,6 +288,22 @@ app.post('/solo_country', function(req, res) {
                 console.log(rows);
                 res.render('channel_dislikes', {title: (table_choice), "myarr": (myarr)});   
             }
+            else if(table_choice == "search_videos") {
+                var lng = rows.length;
+                for (var i = 0; i < lng; i++) {
+                    //Create an object to save current row's data
+                    var video = {
+                        'channel_title':rows[i].channel_title,
+                        'title':rows[i].title,
+                        'view_count': rows[i].view_count,
+                    }
+                    // Add object into array
+                    myarr.push(video);
+                }
+                // Render index page using array 
+                console.log(rows);
+                res.render('most_views', {title: (table_choice), "myarr": (myarr)});   
+            }
         }
     });
 });
@@ -343,26 +368,6 @@ app.post('/multi_countries', function(req, res) {
         }
     });
 });
-
-// app.post('/addfavorite', function(req, res) {
-//     var username = req.body.username;
-//     var v_id = req.body.video_id;
-//     var sql1 = `IF  NOT EXISTS (SELECT * FROM LikedVideo WHERE v_id = ?)
-//     BEGIN
-//     INSERT INTO LikedVideo (v_id) VALUES (v_id, title)
-//     END
-//     ;`
-//     var sql2 = ``;
-//     console.log(sql);
-//     connection.query(sql, function(err, result) {
-//         if (err) {
-//             res.send(err);
-//             return;
-//         }
-//         res.redirect('/choosecountry');
-//     });
-// });
-
 
 /* GET login page, respond by  */
 app.post('/modified_favorite_videos', function(req, res) {
