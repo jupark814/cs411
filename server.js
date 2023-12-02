@@ -60,7 +60,8 @@ app.post('/login', function(req, res) {
     var sql = `SELECT * FROM User_login WHERE user_id = '${username}' && pwd = '${password}'`;
     console.log(sql);
     connection.query(sql, function(err, result) {
-        if (err) {
+        console.log(result);
+        if (err || Object.keys(result).length === 0) {
             res.redirect('/login_failure');
             return;
         }
